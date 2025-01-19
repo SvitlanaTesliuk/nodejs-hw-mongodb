@@ -1,8 +1,9 @@
-// Додайте виведення для дебагу
-console.log('Current directory:', __dirname);
-console.log('Attempting to import Contact from: ../../src/models/Contact.js');
+console.log('Current working directory:', process.cwd());
+console.log('Directory name:', __dirname);
+console.log('Import path:', import.meta.url);
 
-import Contact from '../../src/models/Contact.js';
+import Contact from '../models/contact.js';
+
 export const getAllContacts = async () => {
   return await Contact.find({});
 };
