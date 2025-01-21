@@ -2,16 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino';
 import pinoHttp from 'pino-http';
-
-import contactsRouter from './routes/contacts.js';
-import { getContactById } from './controllers/contacts.js';
-import { getAllContacts } from './services/contacts.js';
+import { getAllContacts, getContactById } from './services/contacts.js';
 
 const getEnvVar = (key, defaultValue) => process.env[key] || defaultValue;
 
 const PORT = Number(getEnvVar('PORT', '3000'));
 
-export const startServer = () => {
+export const setupServer = () => {
   const app = express();
 
   app.use(cors());
@@ -21,7 +18,7 @@ export const startServer = () => {
   app.get('/contacts', async (req, res) => {
     try {
       const contacts = await getAllContacts();
-      res.status(200).json({ data: contacts });
+      res.status(200).json({ data: contacts, message: "Successfully found contacts!" });
     } catch (error) {
       res.status(500).json({ message: 'Internal server error' });
     }
@@ -38,13 +35,11 @@ export const startServer = () => {
         return;
       }
 
-      res.status(200).json({ data: contact });
+      res.status(200).json({ data: contact, message: "Successfully found contact!" });
     } catch (error) {
       res.status(500).json({ message: 'Internal server error' });
     }
   });
-
-  app.use('/contacts', contactsRouter);
 
   app.use((req, res) => {
     res.status(404).json({ message: 'Not found' });
