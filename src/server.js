@@ -17,6 +17,8 @@ export const setupServer = () => {
   const logger = pino();
   app.use(pinoHttp({ logger }));
 
+  app.use(express.json());
+
   app.use('/contacts', contacts);
 
   app.use('*', notFoundHandler);
