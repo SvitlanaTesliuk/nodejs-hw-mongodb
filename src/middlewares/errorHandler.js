@@ -4,7 +4,7 @@ export const errorHandler = (err, req, res, next) => {
     res.status(err.status).json({
       status: 404,
       message: "Contact not found",
-      data: null,
+      data: err.message,
     });
     return;
   }
