@@ -1,6 +1,6 @@
-import { HttpError } from 'http-errors';
+import createHttpError from 'http-errors';
 export const errorHandler = (err, req, res, next) => {
-  if (err instanceof HttpError) {
+  if (err instanceof createHttpError) {
     res.status(err.status).json({
       status: 404,
       message: "Contact not found",
@@ -11,6 +11,6 @@ export const errorHandler = (err, req, res, next) => {
     res.status(500).json({
       status: 500,
       message: 'Something went wrong',
-      error: err.message,
+      data: err,
     });
   };
