@@ -13,9 +13,7 @@ const contactSchema = new mongoose.Schema(
       default: 'personal'
     },
   },
-  { timestamps: true,
-    versionKey: false,
-   }
-);
+  { timestamps: true },
+  { versionKey: false });
 
 export const Contact = mongoose.model('Contact', contactSchema);

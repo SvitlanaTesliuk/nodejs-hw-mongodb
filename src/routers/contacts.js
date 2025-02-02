@@ -3,7 +3,7 @@ import { getAllContactsController, getContactByIdController, createContactContro
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { errorHandler } from '../middlewares/errorHandler.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import {  createContactSchema, updateContactSchema } from '../validation/contacts.js';
+import { createContactSchema, updateContactSchema } from '../validation/contacts.js';
 import { isValidId } from '../middlewares/isValidId.js';
 
 

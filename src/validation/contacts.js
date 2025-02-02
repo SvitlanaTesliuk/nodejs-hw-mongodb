@@ -6,49 +6,34 @@ export const createContactSchema = Joi.object({
     "string.min": "Name should have at least 3 characters",
     "string.max": "Name should have at most 20 characters",
   }),
-
-  age: Joi.number().integer().min(6).max(16).required().messages({
-    "number.base": "Age must be a number",
-    "number.min": "Age must be at least 6",
-    "number.max": "Age must be at most 16",
+  phoneNumber: Joi.string().min(10).max(15).required().messages({
+    "string.empty": "Phone number is required",
+    "string.min": "Phone number should have at least 10 digits",
+    "string.max": "Phone number should have at most 15 digits",
   }),
-
-  gender: Joi.string().valid("male", "female", "other").required().messages({
-    "any.only": "Gender must be 'male', 'female', or 'other'",
+  email: Joi.string().email().messages({
+    "string.email": "Invalid email format",
   }),
-
-  avgMark: Joi.number().min(2).max(12).required().messages({
-    "number.base": "Average mark must be a number",
-    "number.min": "Average mark must be at least 2",
-    "number.max": "Average mark must be at most 12",
-  }),
-
-  onDuty: Joi.boolean().messages({
-    "boolean.base": "OnDuty must be a boolean value",
+  isFavourite: Joi.boolean(),
+  contactType: Joi.string().valid("work", "home", "personal").messages({
+    "any.only": "Contact type must be one of: work, home, personal",
   }),
 });
 
 export const updateContactSchema = Joi.object({
-    name: Joi.string().min(3).max(20).messages({
-      "string.min": "Name should have at least 3 characters",
-      "string.max": "Name should have at most 20 characters",
-    }),
-
-    age: Joi.number().integer().min(6).max(16).messages({
-      "number.min": "Age must be at least 6",
-      "number.max": "Age must be at most 16",
-    }),
-
-    gender: Joi.string().valid("male", "female", "other").messages({
-      "any.only": "Gender must be 'male', 'female', or 'other'",
-    }),
-
-    avgMark: Joi.number().min(2).max(12).messages({
-      "number.min": "Average mark must be at least 2",
-      "number.max": "Average mark must be at most 12",
-    }),
-
-    onDuty: Joi.boolean().messages({
-      "boolean.base": "OnDuty must be a boolean value",
-    }),
-  }).min(1); 
+  name: Joi.string().min(3).max(20).messages({
+    "string.min": "Name should have at least 3 characters",
+    "string.max": "Name should have at most 20 characters",
+  }),
+  phoneNumber: Joi.string().min(10).max(15).messages({
+    "string.min": "Phone number should have at least 10 digits",
+    "string.max": "Phone number should have at most 15 digits",
+  }),
+  email: Joi.string().email().messages({
+    "string.email": "Invalid email format",
+  }),
+  isFavourite: Joi.boolean(),
+  contactType: Joi.string().valid("work", "home", "personal").messages({
+    "any.only": "Contact type must be one of: work, home, personal",
+  }),
+}).min(1);
