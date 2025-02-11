@@ -2,7 +2,8 @@ import express from 'express';
 import cors from 'cors';
 import pino from 'pino';
 import pinoHttp from 'pino-http';
-import contacts from './routers/contacts.js';
+import router from './routers/index.js';
+import cookieParser from 'cookie-parser';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
@@ -13,13 +14,18 @@ const PORT = Number(getEnvVar('PORT', '3000'));
 export const setupServer = () => {
   const app = express();
 
-  app.use(cors());
+  app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  }));
+  app.use(cookieParser());
   const logger = pino();
   app.use(pinoHttp({ logger }));
 
   app.use(express.json());
 
-  app.use('/contacts', contacts);
+  app.use( router);
 
   app.use('*', notFoundHandler);
 

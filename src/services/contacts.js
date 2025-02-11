@@ -2,8 +2,11 @@ import { Contact } from '../models/contact.js';
 import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 import { SORT_ORDER } from '../constants/index.js';
 
-
+/**
+ * Отримати всі контакти конкретного користувача з пагінацією та сортуванням
+ */
 export const getAllContacts = async ({
+  userId,
   page = 1,
   perPage = 10,
   sortOrder = SORT_ORDER.ASC,
@@ -12,9 +15,9 @@ export const getAllContacts = async ({
   const limit = perPage;
   const skip = (page - 1) * perPage;
 
-  const contactsQuery = Contact.find().sort({ [sortBy]: sortOrder });
-  const contactsCount = await Contact.countDocuments();
-
+  // Фільтруємо контакти тільки для цього користувача
+  const contactsQuery = Contact.find({ userId }).sort({ [sortBy]: sortOrder });
+  const contactsCount = await Contact.countDocuments({ userId });
 
   const contacts = await contactsQuery
     .skip(skip)
@@ -29,22 +32,31 @@ export const getAllContacts = async ({
     ...paginationData,
   };
 };
-export const getContactById = async (id) => {
-    const contact = await Contact.findById(id);
-    return contact;
-  };
 
-export const createContact = async (payload) => {
-    const contact = await Contact.create(payload);
-    return contact;
-  };
+/**
+ * Отримати контакт за ID, але тільки якщо він належить користувачеві
+ */
+export const getContactById = async (userId, id) => {
+  return Contact.findOne({ _id: id, userId });
+};
 
-export const updateContact = async (id, payload) => {
-    const contact = await Contact.findByIdAndUpdate(id, payload, { new: true });
-    return contact;
-  };
+/**
+ * Створити новий контакт для конкретного користувача
+ */
+export const createContact = async (userId, payload) => {
+  return Contact.create({ ...payload, userId });
+};
 
-  export const deleteContact = async (id) => {
-    const contact = await Contact.findByIdAndDelete(id);
-    return contact;
-  };
+/**
+ * Оновити контакт, але тільки якщо він належить користувачеві
+ */
+export const updateContact = async (userId, id, payload) => {
+  return Contact.findOneAndUpdate({ _id: id, userId }, payload, { new: true });
+};
+
+/**
+ * Видалити контакт, але тільки якщо він належить користувачеві
+ */
+export const deleteContact = async (userId, id) => {
+  return Contact.findOneAndDelete({ _id: id, userId });
+};
