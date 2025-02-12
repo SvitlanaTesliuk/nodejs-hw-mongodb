@@ -4,7 +4,6 @@ import { SessionsCollection } from '../db/models/session.js';
 export const authenticate = async (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
-
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       throw createHttpError(401, "Unauthorized");
     }
@@ -20,7 +19,8 @@ export const authenticate = async (req, res, next) => {
       throw createHttpError(401, "Access token expired");
     }
 
-    req.user = session.userId; 
+    req.user = session.userId.toString();
+
     next();
   } catch (error) {
     next(error);
