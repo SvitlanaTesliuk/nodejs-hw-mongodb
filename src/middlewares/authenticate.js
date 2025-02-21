@@ -20,7 +20,7 @@ export const authenticate = async (req, res, next) => {
     }
 
     req.user = session.userId.toString();
-
+    console.log(session, req.user)
     next();
   } catch (error) {
     next(error);
