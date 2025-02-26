@@ -15,7 +15,7 @@ parameters:
 requestBody:
   required: true
   content:
-    application/json:
+    multipart/form-data:
       schema:
         type: object
         properties:
@@ -25,9 +25,21 @@ requestBody:
           email:
             type: string
             example: "updated@example.com"
-          phone:
+          phoneNumber:
             type: string
             example: "+1234567890"
+          isFavourite:
+            description: "Contact's favorite status"
+            type: boolean
+            example: true
+          contactType:
+            description: "Contact's type"
+            type: string
+            example: 'Personal'
+          photo:
+            description: "New contact's photo file"
+            type: string
+            format: binary
 responses:
   '200':
     description: 'Successfully updated contact'
