@@ -129,7 +129,6 @@
                   "email",
                   "isFavourite",
                   "contactType",
-                  "userId",
                   "photo"
                 ],
                 "properties": {
@@ -163,16 +162,10 @@
                     "type": "string",
                     "example": "Personal"
                   },
-                  "userId": {
-                    "description": "User ID",
-                    "type": "string",
-                    "example": "65e4decdd286b30065d54af9"
-                  },
                   "photo": {
-                    "description": "URL of the contact's photo",
+                    "description": "New contact's photo file",
                     "type": "string",
-                    "format": "uri",
-                    "example": "https://example.com/photo.jpg"
+                    "format": "binary"
                   }
                 }
               }
@@ -300,7 +293,7 @@
         "requestBody": {
           "required": true,
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
                 "type": "object",
                 "properties": {
@@ -312,9 +305,21 @@
                     "type": "string",
                     "example": "updated@example.com"
                   },
-                  "phone": {
+                  "phoneNumber": {
                     "type": "string",
                     "example": "+1234567890"
+                  },
+                  "isFavourite": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "contactType": {
+                    "type": "string",
+                    "example": "Personal"
+                  },
+                  "photo": {
+                    "type": "string",
+                    "format": "binary"
                   }
                 }
               }

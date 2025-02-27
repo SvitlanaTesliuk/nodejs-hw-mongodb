@@ -41,7 +41,7 @@ requestBody:
             type: string
             example: 'Personal'
           photo:
-            description: "URL of the contact's photo"
+            description: "New contact's photo file"
             type: string
             format: binary
 responses:
